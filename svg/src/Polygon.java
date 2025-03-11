@@ -1,7 +1,18 @@
 
-public class Polygon {
+public class Polygon extends Shape{
     private final Point[] vertices;
-    private Style style;
+
+    public static Polygon square(Segment diagonal, Style style){
+        Segment[] perpendiculars = diagonal.perpendicularSegments(
+                diagonal.getCenter(), diagonal.length()/2
+        );
+        return new Polygon(new Point[]{
+                diagonal.getA(),
+                perpendiculars[0].getB(),
+                diagonal.getB(),
+                perpendiculars[1].getB()
+        }, style);
+    }
 
     public Polygon(Point[] vertices) {
         this(vertices, new Style("none", "black", 1));
@@ -12,11 +23,12 @@ public class Polygon {
     }
 
     public Polygon(Point[] vertices, Style style){
+        super(style);
         this.vertices = new Point[vertices.length];
         for(int i=0; i< vertices.length; i++){
             this.vertices[i] = new Point(vertices[i]);
         }
-        this.style = style;
+
     }
 
     public void setPoint(int ix, int x, int y){
@@ -33,12 +45,14 @@ public class Polygon {
         return s.toString().trim();
     }
 
+    @Override
     public String toSvg(){
         return "<polygon points=\""
                 + this
                 +"\" "+style.toSvg()+" />";
     }
 
+    @Override
     public BoundingBox boundingBox(){
         if(vertices.length == 0){
             return new BoundingBox(0,0,0,0);

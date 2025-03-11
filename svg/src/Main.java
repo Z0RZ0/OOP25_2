@@ -1,5 +1,4 @@
 import java.io.IOException;
-import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -32,9 +31,9 @@ public class Main {
 
 
         SvgScene scene = new SvgScene();
-        scene.addPolygon(poly);
+        scene.addShape(poly);
         Polygon polyCopy = new Polygon(poly);
-        scene.addPolygon(polyCopy);
+        scene.addShape(polyCopy);
         polyCopy.setPoint(0, -40, -40);
         polyCopy.setPoint(1, 0, 30);
         polyCopy.setPoint(2, 40, 0);
@@ -45,15 +44,21 @@ public class Main {
                 new Point(90, 90),
                 new Point(90, 40)
         });
-        scene.addPolygon(square);
+        scene.addShape(square);
         System.out.println("Scene:");
         System.out.println(scene.toSvg());
 
         // tworzenie kwadratu
-        Segment seg = new Segment(new Point(100, 100), new Point(140, 140));
-        Segment[] perpendiculars = seg.perpendicularSegments(new Point(100, 100));
-        System.out.println("Prostopadłe: "+ Arrays.toString(perpendiculars));
+        Segment diag = new Segment(new Point(100, 100), new Point(140, 140));
+        Polygon squre2 = Polygon.square(diag, style);
+        System.out.println("square2: "+squre2);
+        scene.addShape(squre2);           // możemy to zrobić, bo Polygon jest Shape (polimorfizm)
 
+        // TODO: tworzenie elipsy
+        // środek elispy (punkt), rx, ry, style
+//        Ellipse ellipse = new Ellipse(new Point(-50, -50), 30, 30, style);
+//        System.out.println(ellipse);
+//        scene.addPolygon(ellipse);
 
         System.out.println(polyCopy.boundingBox());
         scene.save("rysunek.svg");
