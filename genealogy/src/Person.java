@@ -44,6 +44,10 @@ public class Person implements Comparable<Person>{
         return children.stream().sorted().toList();
     }
 
+    public String getFullName(){
+        return name + ' ' + surname;
+    }
+
     @Override
     public String toString() {
         return "Person{" +

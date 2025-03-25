@@ -40,8 +40,17 @@ public class Main {
 
         System.out.println(personList.get(2).getYoungestChild());
         System.out.println(personList.get(0).getYoungestChild());
-
         System.out.println(personList.get(0).getChildren());
+
+        System.out.println();
+
+        Family family = new Family();
+        family.add(personList.get(0));
+        family.add(personList.get(1));
+        family.add(personList.get(2));
+
+        System.out.println(family.get("Ania Kowalska"));
+        System.out.println(family.get("Maria Monika"));
 
     }
 }
