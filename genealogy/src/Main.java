@@ -23,11 +23,16 @@ public class Main {
                 "Ania", "Kowalska",
                 LocalDate.of(2017,3,20)
         ));
+        personList.add(new Person(
+                "Maria", "Monika",
+                LocalDate.of(2013,5,5)
+        ));
 
         System.out.println(personList.get(0).adopt(personList.get(1)));
         System.out.println(personList.get(0).adopt(personList.get(1)));
         System.out.println(personList.get(0).adopt(personList.get(2)));
         System.out.println(personList.get(0).adopt(personList.get(0)));
+        personList.get(0).adopt(personList.get(3));
 
         for (Person p : personList){
             System.out.println(p);
@@ -35,6 +40,8 @@ public class Main {
 
         System.out.println(personList.get(2).getYoungestChild());
         System.out.println(personList.get(0).getYoungestChild());
+
+        System.out.println(personList.get(0).getChildren());
 
     }
 }
