@@ -8,9 +8,11 @@ public class Family {
         this.family = new HashMap<>();
     }
 
-    public void add(Person p){
+    public void add(Person... people){
+        for(Person p : people){
         String key= p.getFullName();
         family.put(key, p);
+        }
     }
     public Person get(String key){
         return family.get(key);
