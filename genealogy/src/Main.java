@@ -46,7 +46,7 @@ public class Main {
 
         Family family = new Family();
         family.add(personList.get(0), personList.get(1));
-        family.add(personList.get(2));
+        family.add(personList.get(3));
 
         System.out.println(family.get("Ania Kowalska"));
         System.out.println(family.get("Maria Monika"));
