@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoField;
 import java.util.*;
+import java.util.stream.Collectors;
 //import java.util.TreeSet;
 
 public class Person implements Comparable<Person>, Serializable {
@@ -162,4 +163,45 @@ public class Person implements Comparable<Person>, Serializable {
     public String getFullName() {
         return name + ' ' + surname;
     }
+
+    public String getUMLObject(){
+        return "object \"" + getFullName() + "\" {\n" +
+                "birth= "+birth+"\n"+
+                (death==null ? "" : "death= "+death+"\n")+
+                "}\n";
+    }
+
+    public static String umlFromList(List<Person> personList) {
+        StringBuilder umlData = new StringBuilder();
+        for (Person p : personList) {
+            umlData.append(p.getUMLObject());
+        }
+        for (Person p : personList) {
+            for (Person child : p.getChildren()) {
+                umlData.append('\"').append(child.getFullName()).append('\"')
+                        .append(" --> ")
+                        .append('\"').append(p.getFullName()).append('\"')
+                        .append("\n");
+            }
+        }
+        return umlData.toString();
+    }
+
+    public static List<Person> selectSournames(List<Person> from, String substring){
+        List<Person> result = new ArrayList<>();
+        for(Person p: from){
+            if(p.surname.toLowerCase().contains(substring.toLowerCase())){
+                result.add(p);
+            }
+        }
+//       return result;
+        return from.stream().filter(p -> p.surname.toLowerCase().contains(substring.toLowerCase()))
+                .collect(Collectors.toList());
+    }
+
+    public static List<Person> sortedByBirth(List<Person> from){
+        return from.stream().sorted()
+                .collect(Collectors.toList());
+    }
+
 }
