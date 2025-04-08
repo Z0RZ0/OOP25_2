@@ -1,10 +1,8 @@
-import java.io.IOException;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        PlantUMLRunner.setjarPath("C:\\Users\\student\\Desktop\\plantuml\\plantuml-1.2025.2.jar");
-
+        PlantUMLRunner.setjarPath("/home/student/Pobrane/plantuml-1.2025.2.jar");
         try {
             List<Person> personList = Person.fromCsv("family.csv");
 
@@ -19,17 +17,26 @@ public class Main {
                     System.out.println("\t"+child.getFullName());
                 }
             }
-
-            String umlData = Person.umlFromList(family);
-            PlantUMLRunner.generateDiagram(umlData, "C:\\Users\\student\\Desktop\\plantuml", "diagram.png");
-
+//            String umlData = Person.umlFromList(
+//                    family,
+//                    Function.identity()     // bez przekształcenia
+//            );
+            String umlData = Person.umlFromList(
+                    family,
+                    uml -> uml.replaceFirst("\\{", "#yellow {"),
+                    person -> Person.selectDeceased(family).contains(person) ||
+                            Person.getOldestAlive(family) == person
+            );
+            PlantUMLRunner.generateDiagram(umlData,
+                    "/home/student/Pobrane/",
+                    "diagram.png");
             System.out.println(umlData);
 
-            //z4-7
-
-            System.out.println(Person.selectSournames(family, "dąb"));
+            // z4-7
+            System.out.println(Person.selectSurnames(family, "dąb"));
             System.out.println(Person.sortedByBirth(family));
             System.out.println(Person.selectDeceased(family));
+            System.out.println(Person.getOldestAlive(family));
 
 
         } catch (Exception e){
