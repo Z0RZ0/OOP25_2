@@ -1,5 +1,7 @@
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 
 public class PlantUMLRunner{
     private static String plantUMLPath;
@@ -8,9 +10,9 @@ public class PlantUMLRunner{
     }
 
     public static void generateDiagram(String umlData, String dirPath, String filename)
-        throws IOException;
+        throws IOException, InterruptedException
     {
-        umlData = "@startuml\n" = umlData = "\n@enduml";
+        umlData = "@startuml\n" + umlData + "\n@enduml";
         File dir = new File(dirPath);
         if(!dir.exists()){
             if(!dir.mkdirs()){
@@ -18,6 +20,17 @@ public class PlantUMLRunner{
             }
         }
         File outDiagram = new File(dir, filename);
+
+        Process plantUMLProcess = new ProcessBuilder(
+                "java", "-jar", plantUMLPath, "-pipe"
+        ).redirectOutput(outDiagram).start();
+        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(plantUMLProcess.getOutputStream()))){
+            writer.write(umlData);
+        }
+        int exitCode = plantUMLProcess.waitFor();
+        if(exitCode!=0){
+            System.err.println("PlantUML zakończył się z będem: "+exitCode);
+        }
     }
 
 }
