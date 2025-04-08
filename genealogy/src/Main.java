@@ -29,6 +29,7 @@ public class Main {
 
             System.out.println(Person.selectSournames(family, "dąb"));
             System.out.println(Person.sortedByBirth(family));
+            System.out.println(Person.selectDeceased(family));
 
 
         } catch (Exception e){

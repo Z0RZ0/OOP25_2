@@ -4,6 +4,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoField;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
 //import java.util.TreeSet;
@@ -200,8 +201,17 @@ public class Person implements Comparable<Person>, Serializable {
     }
 
     public static List<Person> sortedByBirth(List<Person> from){
-        return from.stream().sorted()
+        return from.stream()
+                .sorted()
                 .collect(Collectors.toList());
+    }
+
+    //z6
+
+    public static List<Person> selectDeceased(List<Person> from){
+        return from.stream().filter(p -> p.death!=null)
+                .sorted(Comparator.comparingLong(p -> ChronoUnit.DAYS.between(p.death, p.birth)))
+                .toList();
     }
 
 }
