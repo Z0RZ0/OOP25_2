@@ -1,6 +1,8 @@
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) {
-        CustomList<Integer> list = new CustomList<>();
+        CustomList<Object> list = new CustomList<>();
 
         //list.getFirst()
         //list.getLast();
@@ -25,9 +27,21 @@ public class Main {
         System.out.println("List[3]: "+list.get(3));
         System.out.println("List[2]: "+list.get(2));
 
-        for(Integer i : list){
+        for(Object i : list){
             System.out.println(i);
         }
 
+        list.stream().forEach(System.out::println);
+
+        list.add("hello");
+        list.add(1234.15);
+        list.addFirst("inny napis");
+        System.out.println(list);
+
+        List<Object> strings = Utils.filterByClass(list, String.class);
+        List<Object> numbers = Utils.filterByClass(list, Number.class);
+
+        System.out.println("string: "+strings);
+        System.out.println("numbers: "+numbers);
     }
 }
