@@ -1,3 +1,5 @@
+import jdk.jshell.execution.Util;
+
 import java.util.List;
 
 public class Main {
@@ -43,5 +45,10 @@ public class Main {
 
         System.out.println("string: "+strings);
         System.out.println("numbers: "+numbers);
+
+        List<Integer> ints = List.of(1, 3, 4, 7, 14, 0, 2);
+        List<Double> doub = List.of(0.0, 1.3, 15.1, 14.6);
+        System.out.println("In range: "+ Utils.countingRange(ints, 0, 4));
+        System.out.println("In range: "+ Utils.countingRange(doub, 0.0, 4.0));
     }
 }
