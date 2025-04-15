@@ -11,4 +11,13 @@ public class CustomList<E> {
     Node head;
     Node tail;
 
+    public CustomList() {
+        head = null;
+        tail = null;
+    }
+
+    void addLast(E value){
+        
+    }
+
 }
