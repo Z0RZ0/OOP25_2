@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.auth.AccountManager;
 import org.example.database.DatabaseConnection;
 
 import javax.xml.crypto.Data;
@@ -11,33 +12,13 @@ public class Main {
     public static void main(String[] args) {
         DatabaseConnection db = new DatabaseConnection();
         db.connect("site.db");
-        try (Statement stmt = db.getConnection().createStatement()) {
-            stmt.executeUpdate("""     
-            CREATE TABLE IF NOT EXISTS test(
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    value TEXT NOT NULL
-                    );
-            """);
 
-            stmt.executeUpdate("""
-                    DELETE FROM test;
-                    """);
+        AccountManager am = new AccountManager(db);
 
-            stmt.executeUpdate("""
-                    INSERT INTO test (value) VALUES ('wartosc1'), ('wartosc2'),('wartosc3'), ('wartosc4');
-                    """);
+        am.register("user1", "password123");
+        am.register("user2", "qwerty");
 
-            ResultSet rs = stmt.executeQuery("""
-                    SELECT * FROM test;
-                    """);
-
-            while (rs.next()){
-                System.out.println(rs.getInt(1)+": "+ rs.getString("value"));
-            }
-
-        } catch (SQLException e){
-            System.err.println(e.getMessage());
-        }
+        System.out.println("Uwierzytelniane: "+am.authenticate("user1", "password123"));
 
         db.disconnect();
 

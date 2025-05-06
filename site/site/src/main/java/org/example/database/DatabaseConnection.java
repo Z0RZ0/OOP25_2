@@ -21,7 +21,7 @@ public class DatabaseConnection {
         }
 
         try {
-            connection.commit();
+            //connection.commit();
             connection.close();
         }catch (SQLException e){
             System.err.println(e.getMessage());
