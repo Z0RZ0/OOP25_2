@@ -20,6 +20,12 @@ public class Main {
 
         System.out.println("Uwierzytelniane: "+am.authenticate("user1", "password123"));
 
+        System.out.println(am.getAccount("user1"));
+        System.out.println(am.getAccount("smigla"));
+
+        System.out.println(am.getAccount(0));
+        System.out.println(am.getAccount(1));
+
         db.disconnect();
 
     }
